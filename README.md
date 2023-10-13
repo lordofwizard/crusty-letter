@@ -1,4 +1,5 @@
 # Crusty Letter
+![Logo](logo.png)
 
 Crusty Letter is a daily communication curated with an assortment of jokes, news, a profound quote, and a selection of recommended songs. It's designed to provide a lighthearted start to your day.
 
