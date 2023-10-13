@@ -4,8 +4,7 @@ Crusty Letter is a daily communication curated with an assortment of jokes, news
 
 ## Motivation
 
-The motivation behind the Crusty Letter project was to reimagine and rewrite an existing application utilizing Rust, a powerful and memory-safe programming language. This reimplementation served as an opportunity to gain insights into ETL (Extract, Transform, Load) pipelines while utilizing Rust's robust ecosystem. Heavily Inspired by Akash's Project called [Cereal-Letter]([https://github.com/akashkham
-](https://github.com/akashjkhamkar/cereal-letter) 🤝.
+The motivation behind the Crusty Letter project was to reimagine and rewrite an existing application utilizing Rust, a powerful and memory-safe programming language. This reimplementation served as an opportunity to gain insights into ETL (Extract, Transform, Load) pipelines while utilizing Rust's robust ecosystem. Heavily Inspired by Akash's Project called [Cereal-Letter](https://github.com/akashjkhamkar/cereal-letter) 🤝.
 ## Stack
 
 - [Rust](https://www.rust-lang.org/): A) systems programming language known for its speed, memory safety, and concurrency support.
