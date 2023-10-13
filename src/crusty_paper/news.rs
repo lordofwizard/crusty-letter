@@ -1,24 +1,39 @@
-use reqwest;
-use serde::Deserialize;
+use reqwest::blocking::get;
+use serde_json::Value;
 
 const MAX_NUMBER_OF_NEWS: usize = 3;
 
-#[derive(Debug, Deserialize)]
-struct NewsArticle {
-    title: String,
-    pubDate: String,
-    description: String,
-}
+pub fn get_news() -> Result<Vec<NewsArticle>, String> {
+    let res = get("https://newsdata.io/api/1/news?apikey=pub_14522263f5b506fbc598ba7459459c982de1f&language=en&category=top,technology,science&page=1");
 
-pub fn get_news() -> Result<Vec<NewsArticle>, Box<dyn std::error::Error>> {
-    let url = "https://newsdata.io/api/1/news?apikey=pub_14522263f5b506fbc598ba7459459c982de1f&language=en&category=top,technology,science&page=1";
-    let res = reqwest::blocking::get(url)?;
+    match res {
+        Ok(response) => {
+            if !response.status().is_success() {
+                return Err("No news for you today, news API is having some mid life crisis.".to_string());
+            }
 
-    if !res.status().is_success() {
-        return Err(format!("No news for you today, news api is having some mid life crisis .").into());
+            let news_text = response.text().unwrap_or_default();
+            let news_json: Value = serde_json::from_str(&news_text).map_err(|_| "Error parsing JSON")?;
+
+            let mut result = Vec::new();
+            for article in news_json["results"].as_array().ok_or("Results not found in response")?.iter().take(MAX_NUMBER_OF_NEWS) {
+                let title = article["title"].as_str().unwrap_or_default().to_string();
+                let published_date = article["pubDate"].as_str().unwrap_or_default().to_string();
+                let summary = article["description"].as_str().unwrap_or_default().to_string();
+
+                let new_article = NewsArticle { title, published_date, summary };
+                result.push(new_article);
+            }
+
+            Ok(result)
+        }
+        Err(_) => Err("Failed to make request".to_string()),
     }
-
-    let news: Vec<NewsArticle> = res.json()?;
-
-    Ok(news.iter().take(MAX_NUMBER_OF_NEWS).cloned().collect())
 }
+
+pub struct NewsArticle {
+    pub title: String,
+    pub published_date: String,
+    pub summary: String,
+}
+

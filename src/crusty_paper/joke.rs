@@ -1,7 +1,7 @@
 use reqwest::blocking::get;
 use serde_json::Value;
 
-fn get_joke() -> Result<String, String> {
+pub fn get_joke() -> Result<String, String> {
     let res = get("https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,explicit&type=single");
 
     match res {
