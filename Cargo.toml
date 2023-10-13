@@ -9,4 +9,7 @@ edition = "2021"
 serde = { version = "*", features = ["serde_derive"] }
 serde_json = "*"
 reqwest = { version = "*", features = ["blocking"] }
+chrono = "0.4.19"
+pdf-canvas = "*"
+genpdf = "0.2.0"
 

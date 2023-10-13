@@ -1,6 +1,6 @@
 use reqwest::blocking::get;
 use serde_json::Value;
-
+use std::fmt;
 const MAX_NUMBER_OF_NEWS: usize = 3;
 
 pub fn get_news() -> Result<Vec<NewsArticle>, String> {
@@ -31,9 +31,15 @@ pub fn get_news() -> Result<Vec<NewsArticle>, String> {
     }
 }
 
+#[derive(Debug)]
 pub struct NewsArticle {
     pub title: String,
     pub published_date: String,
     pub summary: String,
 }
 
+impl fmt::Display for NewsArticle {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Title: {}\nPublished Date: {}\nSummary: {}", self.title, self.published_date, self.summary)
+    }
+}
